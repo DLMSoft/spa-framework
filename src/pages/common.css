@@ -2,3 +2,6 @@
 body, html { height: 100%; }
 body { margin: 0; }
 #root { height: 100%; }
+
+.lf { float: left; }
+.rf { float: right; }

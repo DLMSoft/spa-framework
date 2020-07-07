@@ -1,6 +1,5 @@
 const path = require('path');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
-const MockWebpackPlugin = require('mockjs-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 const WEBSITE_TITLE = 'DLMSoft React SPA Framework';
@@ -47,7 +46,6 @@ module.exports = {
     },
     plugins: [
         new MiniCSSExtractPlugin(),
-        //new MockWebpackPlugin(),
         new HTMLWebpackPlugin({
             title: WEBSITE_TITLE
         })

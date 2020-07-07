@@ -1,10 +1,18 @@
 {
+    "env": {
+        "production": {
+            "plugins": [
+                "transform-remove-console"
+            ]
+        }
+    },
     "presets": [
         "@babel/preset-env",
         "@babel/preset-react",
         "@babel/preset-typescript"
     ],
     "plugins": [
+        "transform-class-properties",
         "@babel/plugin-transform-runtime",
         [
             "@babel/plugin-proposal-decorators",

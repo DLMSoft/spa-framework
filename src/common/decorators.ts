@@ -1,7 +1,7 @@
 import { ClassType } from "react";
 
-export function permission() {
-    return function(target: any, perssionNodeName: string) {
+export function permission(perssionNodeName: string) {
+    return function(target: any) {
         target.permissionNode = perssionNodeName;
     }
 }

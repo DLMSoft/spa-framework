@@ -6,17 +6,38 @@ export default [
         key: 'test-1',
         label: 'Test 001',
         icon: <Icons.FolderOutlined />,
-        permission: 'admin'
+        items: [
+            {
+                label: 'Test Page',
+                link: '/test1',
+                icon: <Icons.FileOutlined />
+            }
+        ]
     },
     {
         key: 'test-2',
         label: 'Test 002',
         icon: <Icons.FolderOutlined />,
-        permission: 'admin'
+        permission: 'admin',
+        items: [
+            {
+                label: 'Test Page',
+                link: '/test2',
+                icon: <Icons.FileOutlined />
+            }
+        ]
     },
     {
         key: 'test-3',
         label: 'Test 003',
-        icon: <Icons.FolderOutlined />
+        icon: <Icons.FolderOutlined />,
+        permission: 'admin',
+        items: [
+            {
+                label: 'Test Page',
+                link: '/test3',
+                icon: <Icons.FileOutlined />
+            }
+        ]
     }
 ]

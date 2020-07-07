@@ -1,14 +1,25 @@
 .logo {
+    float:left;
     font-size: 24px;
-    line-height: 48px;
-    padding: 8px;
     height: 64px;
+    width: 256px;
 
     a {
+        padding: 8px;
         color: #fff;
+        line-height: 48px;
+        display: block;
 
         &:hover {
             color: #f00;
         }
     }
+}
+
+.sider {
+    overflow: hidden;
+    overflow-y: auto;
+    position: fixed;
+    height: 100vh;
+    box-shadow: 0 0 8px rgba(#000, 0.5);
 }

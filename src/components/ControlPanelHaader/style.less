@@ -1,0 +1,45 @@
+@import '~antd/lib/style/themes/default.less';
+
+.header {
+    padding: 0;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 0 8px rgba(#000, 0.5);
+    position: fixed;
+    z-index: 1;
+
+    &.folded {
+        left: 80px;
+    }
+
+    .toggleMenu {
+        float: left;
+        color: #666;
+        display: block;
+        width: 64px;
+        line-height: 64px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 20px;
+
+        &:hover {
+            background: #eee;
+        }
+    }
+
+    .userMenu {
+        float: right;
+
+        :global(.ant-menu-submenu-active) {
+            background: #eee;
+        }
+    }
+}
+
+.subMenu {
+    position: fixed;
+
+    :global(.ant-menu-item-active) {
+        background: #eee;
+    }
+}

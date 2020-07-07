@@ -1,7 +1,7 @@
 const path = require('path');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
-const MockWebpackPlugin = require('mockjs-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const apiMocker = require('mocker-api');
 
 const WEBSITE_TITLE = 'DLMSoft React SPA Framework';
 
@@ -9,7 +9,7 @@ module.exports = {
     mode: 'development',
     entry: './src/index.tsx',
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: path.resolve(__dirname, 'build/'),
         filename: 'scripts/bundle.js',
         chunkFilename: 'scripts/bundle/[name].chunk.js'
     },
@@ -59,12 +59,9 @@ module.exports = {
     },
     plugins: [
         new MiniCSSExtractPlugin(),
-        new MockWebpackPlugin({
-            path: path.join(__dirname, './mocks'),
-            port: 3001
-        }),
         new HTMLWebpackPlugin({
-            title: WEBSITE_TITLE
+            title: WEBSITE_TITLE,
+            base: '/'
         })
     ],
     resolve: {
@@ -72,15 +69,10 @@ module.exports = {
     },
     devtool: 'source-map',
     devServer: {
-        port: 3000,
-        proxy: {
-            '/api': {
-                target: 'http://localhost:3001/',
-                pathRewrite: {
-                    '^/api': ''
-                }
-            }
+        before(app) {
+            apiMocker(app, path.resolve('./mocks'));
         },
+        port: 3000,
         contentBase: path.join(__dirname, 'public'),
         compress: true,
         historyApiFallback: true,

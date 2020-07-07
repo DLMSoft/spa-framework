@@ -1,10 +1,10 @@
-import React from 'react';
-import { Loading3QuartersOutlined } from '@ant-design/icons';
+import React, { ReactElement } from 'react';
+import { Spin } from 'antd';
 
-export default function Loading(text: string = 'Loading ...') {
+export default function Loading({text = '载入中 ...'}:any): ReactElement {
     return (
-        <div>
-            <Loading3QuartersOutlined spin /> {text}
+        <div style={{textAlign: 'center'}}>
+            <Spin tip={text} />
         </div>
     );
 }
