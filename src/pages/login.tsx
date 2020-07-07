@@ -9,6 +9,8 @@ import { BasePageProps } from '../common/props';
 
 import SessionContext, { SessionContextValue, SessionInfo } from '../contexts/SessionContext';
 
+import styles from './login.less';
+
 const { Item: FormItem } = Form;
 
 function LoginForm({loading, onSubmit}) {
@@ -20,7 +22,7 @@ function LoginForm({loading, onSubmit}) {
     return (
         <Form name="login" onFinish={onFormSubmit} initialValues={{rememberPassword: true}}>
             <FormItem name="userName" rules={[{required: true, message: '请输入用户名！'}]}>
-                <Input placeholder="用户名" prefix={<Icons.UserOutlined/>}  />
+                <Input placeholder="用户名" prefix={<Icons.UserOutlined/>} autoFocus />
             </FormItem>
             <FormItem name="password" rules={[{required: true, message: '请输入密码！'}]}>
                 <Input.Password placeholder="密码" prefix={<Icons.LockOutlined/>} />
@@ -136,7 +138,7 @@ export default class LoginPage extends Component<LoginPageProps, LoginPageState>
             return <Skeleton active />;
         }
         return (
-            <div>
+            <div className={styles.loginBox}>
                 <h1>系统登录</h1>
                 <Card bordered={false}>
                     <LoginForm loading={this.state.isSubmitting} onSubmit={this.onFormSubmit}/>

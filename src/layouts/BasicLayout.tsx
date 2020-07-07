@@ -73,7 +73,7 @@ export default class BasicLayout extends Component<BasicLayoutProps, BasicLayout
     }
 
     setUIContextState(state: UIState) {
-        this.setState({ uiState: { state: state, setState: this.setUIContextState } });
+        this.setState({ uiState: { state: { ...this.state.uiState.state, ...state }, setState: this.setUIContextState } });
     }
 
     componentDidMount() {
@@ -150,7 +150,7 @@ export default class BasicLayout extends Component<BasicLayoutProps, BasicLayout
             <Layout style={{minHeight: '100%'}}>
                 <UIContext.Provider value={this.state.uiState}>
                     <SideMenu onItemClick={this.onMenuItemClick} />
-                    <Layout style={{marginLeft:isSideMenuFolded ? 0 : 256}}>
+                    <Layout style={{marginLeft:isSideMenuFolded ? 80 : 256}}>
                         <ControlPanelHeader onUserMenuItemClick={this.onUserMenuItemClick} />
                         <Content style={{marginTop: 64}}>
                             <div className={styles.mainContent}>
