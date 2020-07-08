@@ -1,0 +1,59 @@
+.banner {
+    height: 64px;
+    line-height: 64px;
+    position: fixed;
+    padding: 0;
+    width: 100%;
+    z-index: 99;
+    background: #fff;
+    box-shadow: 0 0 8px rgba(#000, .5);
+
+    .logo {
+        float:left;
+        height: 64px;
+        padding: 0 16px;
+
+        a {
+            display: block;
+    
+            img {
+                margin: 8px;
+                height: 48px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+        
+            h1 {
+                font-weight: normal;
+                font-size: 24px;
+                padding: 8px 0;
+                line-height: 48px;
+                display: inline-block;
+                vertical-align: middle;
+                color: #333;
+                margin: 0;
+            }
+        
+            &:hover {
+                color: #f00;
+            }
+        }
+    }
+
+    .userMenu {
+        float: right;
+        height: 64px;
+
+        :global(.ant-menu-submenu-active) {
+            background: #eee;
+        }
+    }
+}
+
+.subMenu {
+    position: fixed;
+
+    :global(.ant-menu-item-active) {
+        background: #eee;
+    }
+}

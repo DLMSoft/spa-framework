@@ -1,5 +1,3 @@
-@import '~antd/lib/style/themes/default.less';
-
 .header {
     padding: 0;
     overflow: hidden;
@@ -13,9 +11,9 @@
     }
 
     .toggleMenu {
-        float: left;
+        vertical-align: middle;
         color: #666;
-        display: block;
+        display: inline-block;
         width: 64px;
         line-height: 64px;
         text-align: center;
@@ -27,19 +25,16 @@
         }
     }
 
-    .userMenu {
-        float: right;
+    .location {
+        display: inline-block;
+        margin-left: 8px;
+        vertical-align: middle;
 
-        :global(.ant-menu-submenu-active) {
-            background: #eee;
+        .breadcrumb {
+            padding: 0 8px;
+            display: inline-block;
+            height: 64px;
+            line-height: 64px;
         }
-    }
-}
-
-.subMenu {
-    position: fixed;
-
-    :global(.ant-menu-item-active) {
-        background: #eee;
     }
 }

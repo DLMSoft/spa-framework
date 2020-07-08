@@ -15,6 +15,9 @@ function makeRoute(loader: Loader): any {
 }
 
 export const routes = {
+    '/': {
+        component: makeRoute(() => import('../pages/index'))
+    },
     '/test1': {
         component: makeRoute(() => import('../pages/tests/Test1'))
     },

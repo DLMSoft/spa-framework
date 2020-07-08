@@ -1,8 +1,14 @@
 import React from 'react';
 
+export interface BreadcrumbItem {
+    name: string,
+    label: string
+};
+
 export interface UIState {
     isSideMenuFolded?: boolean,
-    currentMenuItem?: string
+    currentMenuItem?: string,
+    breadcrumb?: BreadcrumbItem[]
 };
 
 export interface UIContextValue {
@@ -13,7 +19,8 @@ export interface UIContextValue {
 const context = React.createContext<UIContextValue>({
     state: {
         isSideMenuFolded: false,
-        currentMenuItem: null
+        currentMenuItem: '/',
+        breadcrumb: []
     },
     setState: () => {}
 });

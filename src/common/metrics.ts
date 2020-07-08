@@ -1,0 +1,1 @@
+export const siteTitle = SITE_TITLE;

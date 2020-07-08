@@ -1,41 +1,33 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import { Layout, Skeleton } from 'antd';
 
 import { getSession, setSession } from '../common/httpUtils';
 import SideMenu from '../components/SideMenu';
-import ControlPanelHeader from '../components/ControlPanelHaader';
+import ControlPanelHeader from '../components/ControlPanelHeader';
 import { BasePageProps } from '../common/props';
 import { getUserInfo } from '../api/login';
 
 import styles from './BasicLayout.less';
-import { Lifter } from '../common/hoc-lifeter';
 import { ClickParam } from 'antd/lib/menu';
 import UIContext, { UIState, UIContextValue } from '../contexts/UIContext';
 import SessionContext, { SessionInfo, SessionContextValue } from '../contexts/SessionContext';
+import Error404 from '../pages/Errors/Error404';
+import ControlPanelBanner from '../components/ControlPanelBanner';
 
 const { Content } = Layout;
-
 
 function getRoutes(routes: Object) {
     const result = [];
 
-    let defaultPage = null;
-
     for (const path in routes) {
         if (!routes.hasOwnProperty(path))
             continue;
-        if (path.startsWith('/user'))
+        if (path == '/') {
+            result.push(<Route exact key={path} path={path} component={routes[path].component} />);
             continue;
-        if (path == '/')
-            continue;
-        if (!defaultPage)
-            defaultPage = path;
-        result.push(<Route key={path} path={path} exact component={routes[path].component} />);
-    }
-
-    if (defaultPage) {
-        result.push(<Redirect key="0" from="/" to={defaultPage} />);
+        }
+        result.push(<Route key={path} path={path} component={routes[path].component} />);
     }
 
     return result;
@@ -65,7 +57,7 @@ export default class BasicLayout extends Component<BasicLayoutProps, BasicLayout
             uiState: {
                 state: {
                     isSideMenuFolded: false,
-                    currentMenuItem: null
+                    currentMenuItem: '/'
                 },
                 setState: this.setUIContextState
             }
@@ -77,9 +69,18 @@ export default class BasicLayout extends Component<BasicLayoutProps, BasicLayout
     }
 
     componentDidMount() {
-        const { history } = this.props;
+        const { history, location } = this.props;
         const context: SessionContextValue = this.context;
         const { session, changeState } = context;
+
+        this.setUIContextState({
+            currentMenuItem: location.pathname
+        });
+        history.listen(({pathname}) => {
+            this.setUIContextState({
+                currentMenuItem: pathname
+            });
+        });
 
         if (!session.isLoggedIn) {
             const localSession = getSession();
@@ -139,7 +140,7 @@ export default class BasicLayout extends Component<BasicLayoutProps, BasicLayout
     }
 
     render() {
-        const { routes } = this.props;
+        const { routes, location } = this.props;
         const { isSideMenuFolded } = this.state.uiState.state;
 
         if (this.state.isLoading) {
@@ -149,18 +150,22 @@ export default class BasicLayout extends Component<BasicLayoutProps, BasicLayout
         return(
             <Layout style={{minHeight: '100%'}}>
                 <UIContext.Provider value={this.state.uiState}>
-                    <SideMenu onItemClick={this.onMenuItemClick} />
-                    <Layout style={{marginLeft:isSideMenuFolded ? 80 : 256}}>
-                        <ControlPanelHeader onUserMenuItemClick={this.onUserMenuItemClick} />
-                        <Content style={{marginTop: 64}}>
-                            <div className={styles.mainContent}>
-                                <Switch>
-                                    {
-                                        getRoutes(routes)
-                                    }
-                                </Switch>
-                            </div>
-                        </Content>
+                    <ControlPanelBanner onUserMenuItemClick={this.onUserMenuItemClick} />
+                    <Layout style={{marginTop: 64}}>
+                        <SideMenu onItemClick={this.onMenuItemClick} />
+                        <Layout style={{marginLeft:isSideMenuFolded ? 80 : 256}}>
+                            <ControlPanelHeader path={location.pathname} />
+                            <Content style={{marginTop: 64}}>
+                                <div className={styles.mainContent}>
+                                    <Switch>
+                                        {
+                                            getRoutes(routes)
+                                        }
+                                        <Route component={Error404}/>
+                                    </Switch>
+                                </div>
+                            </Content>
+                        </Layout>
                     </Layout>
                 </UIContext.Provider>
             </Layout>
