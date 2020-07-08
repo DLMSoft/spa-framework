@@ -10,7 +10,7 @@ export type Loader = () => Promise<any>;
 export interface LoadableState {
     isLoaded: boolean;
     loader: Loader;
-    component?: any;
+    component?: ComponentClass | FunctionComponent | null;
 };
 
 export default function loadComponent(loader: Loader, opt: LoadOptions): ComponentClass|FunctionComponent {

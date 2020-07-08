@@ -32,7 +32,7 @@ export default class SideMenu extends Component<SideMenuProps> {
                                         首页
                                     </MenuItem>
                                     {
-                                        menu.filter(item => !item.permission || session.permissionNodes && session.permissionNodes.indexOf(item.permission) != -1).map(item => (
+                                        menu.filter(item => !item.permission || (session.permissionNodes && session.permissionNodes.indexOf(item.permission) != -1)).map(item => (
                                             <SubMenu icon={item.icon} key={item.key} title={item.label}>
                                             {
                                                 item.items.map(child => (

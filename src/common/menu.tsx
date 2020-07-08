@@ -18,7 +18,7 @@ export default [
         key: 'test-2',
         label: 'Test 002',
         icon: <Icons.FolderOutlined />,
-        permission: 'admin',
+        permission: 'test2',
         items: [
             {
                 label: 'Test Page',
@@ -31,7 +31,7 @@ export default [
         key: 'test-3',
         label: 'Test 003',
         icon: <Icons.FolderOutlined />,
-        permission: 'admin',
+        permission: 'test3',
         items: [
             {
                 label: 'Test Page',

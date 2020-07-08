@@ -9,7 +9,7 @@ export interface PermissionControlProps {
 }
 
 export function PermissionControl(props: PermissionControlProps) {
-    const {fallback = null, children, render} = props;
+    const {required, fallback = null, children, render} = props;
 
     if (!children && !render)
         throw new Error('No render function nor child elements are specified.');
@@ -20,6 +20,9 @@ export function PermissionControl(props: PermissionControlProps) {
             const {permissionNodes} = session;
 
             if (!permissionNodes || permissionNodes.length == 0)
+                return fallback;
+
+            if (permissionNodes.indexOf(required) == -1)
                 return fallback;
 
             if (render) {
@@ -39,9 +42,13 @@ export interface PermissionControlOptions {
 }
 
 export function withPermission<Props extends Object>(node: string, options?: PermissionControlOptions) {
-    return function(TargetComponent: ComponentClass<Props> | FunctionComponent<Props>, props?: Props) {
-        <PermissionControl required={node} {...options}>
-            <TargetComponent {...props} />
-        </PermissionControl>
+    return function(TargetComponent: ComponentClass<Props> | FunctionComponent<Props>) {
+        return function(props: Props) {
+            return (
+                <PermissionControl required={node} {...options}>
+                    <TargetComponent {...props} />
+                </PermissionControl>
+            );
+        }
     }
 };

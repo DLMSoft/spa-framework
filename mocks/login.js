@@ -7,7 +7,7 @@ module.exports = {
                     return res.status(201).json({
                         id: '1',
                         displayName: '超级管理员',
-                        permissions: ['admin'],
+                        permissions: ['test2', 'test3', 'test3.write'],
                         sessionId: Math.random().toString(36).substr(2, 8)
                     });
                 }
@@ -17,7 +17,7 @@ module.exports = {
                     return res.status(201).json({
                         id: '2',
                         displayName: '测试用户',
-                        permissions: [],
+                        permissions: ['test3'],
                         sessionId: Math.random().toString(36).substr(2, 8)
                     });
                 }
@@ -43,13 +43,13 @@ module.exports = {
                 return res.status(200).json({
                     id: '1',
                     displayName: '超级管理员',
-                    permissions: ['admin']
+                    permissions: ['test2', 'test3', 'test3.write'],
                 });
             case '2':
                 return res.status(200).json({
                     id: '2',
                     displayName: '测试用户',
-                    permissions: []
+                    permissions: ['test3']
                 });
         }
 

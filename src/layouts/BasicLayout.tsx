@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Layout, Skeleton } from 'antd';
+import { Layout, Skeleton, Modal } from 'antd';
+import * as Icons from '@ant-design/icons';
 
 import { getSession, setSession } from '../common/httpUtils';
 import SideMenu from '../components/SideMenu';
@@ -16,6 +17,7 @@ import Error404 from '../pages/Errors/Error404';
 import ControlPanelBanner from '../components/ControlPanelBanner';
 
 const { Content } = Layout;
+const { confirm } = Modal;
 
 function getRoutes(routes: Object) {
     const result = [];
@@ -132,9 +134,18 @@ export default class BasicLayout extends Component<BasicLayoutProps, BasicLayout
 
         switch (cmd) {
             case 'logout':
-                setSession(null);
-                changeState({ isLoggedIn: false });
-                history.push('/login');
+                confirm({
+                    title: '注销登录',
+                    content: '确定要退出当前登录的账号吗？',
+                    icon: <Icons.QuestionCircleOutlined />,
+                    cancelText: '取消',
+                    okText: '确定',
+                    onOk() {
+                        setSession(null);
+                        changeState({ isLoggedIn: false });
+                        history.push('/login');
+                    }
+                });
                 return;
         }
     }
