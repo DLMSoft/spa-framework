@@ -13,3 +13,7 @@ export async function userLogin(input: ILoginInput) {
 export async function getUserInfo(sessionId: string) {
     return await http.getJson('/sessions/' + sessionId);
 }
+
+export async function userLogout(sessionId: string) {
+    return await http.deleteJson('/sessions/' + sessionId);
+}

@@ -6,9 +6,10 @@ export interface BreadcrumbItem {
 };
 
 export interface UIState {
-    isSideMenuFolded?: boolean,
-    currentMenuItem?: string,
-    breadcrumb?: BreadcrumbItem[]
+    isSideMenuFolded?: boolean;
+    sideMenuOpenKey?: string[];
+    currentMenuItem?: string;
+    breadcrumb?: BreadcrumbItem[];
 };
 
 export interface UIContextValue {
@@ -19,6 +20,7 @@ export interface UIContextValue {
 const context = React.createContext<UIContextValue>({
     state: {
         isSideMenuFolded: false,
+        sideMenuOpenKey: [],
         currentMenuItem: '/',
         breadcrumb: []
     },

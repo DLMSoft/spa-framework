@@ -56,5 +56,17 @@ module.exports = {
         return res.status(401).json({
             error: '登录超时！'
         });
+    },
+    'DELETE /api/sessions/:sessionId': (req, res) => {
+        const { sessionId: paramSessionId } = req.params;
+        const { 'x-session-id': sessionId, 'x-user-id': userId } = req.headers;
+
+        if (paramSessionId != sessionId) {
+            return res.status(401).json({
+                error: '登录超时！'
+            });
+        }
+
+        return res.status(204).end();
     }
 };

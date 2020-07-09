@@ -5,3 +5,13 @@ body { margin: 0; }
 
 .lf { float: left; }
 .rf { float: right; }
+
+html::-webkit-scrollbar {
+    width: 8px;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+html::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.25);
+}

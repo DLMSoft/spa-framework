@@ -84,3 +84,23 @@ export async function postJson(url: string, postData: any): Promise<HttpResponse
         }
     }
 }
+
+export async function deleteJson(url: string): Promise<HttpResponse> {
+    try {
+        const res = await axios.delete(API_PREFIX + url, { headers: getHeaders() });
+        return {
+            statusCode: res.status,
+            body: res.data
+        };
+    }
+    catch (ex) {
+        if (!ex.response) {
+            throw ex;
+        }
+
+        return {
+            statusCode: ex.response.status,
+            body: ex.response.data
+        }
+    }
+}

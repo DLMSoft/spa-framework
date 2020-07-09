@@ -3,8 +3,18 @@
     overflow: hidden;
     overflow-y: auto;
     position: fixed;
-    height: 100vh;
+    height: calc(100% - 64px);
     box-shadow: 0 0 8px rgba(#000, 0.5);
+
+    &::-webkit-scrollbar {
+        width: 8px;
+        background: rgba(#fff, 0.25);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        width: 8px;
+        background: rgba(#fff, 0.25);
+    }
 }
 
 .subMenu {

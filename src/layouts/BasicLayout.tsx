@@ -7,7 +7,7 @@ import { getSession, setSession } from '../common/httpUtils';
 import SideMenu from '../components/SideMenu';
 import ControlPanelHeader from '../components/ControlPanelHeader';
 import { BasePageProps } from '../common/props';
-import { getUserInfo } from '../api/login';
+import { getUserInfo, userLogout } from '../api/login';
 
 import styles from './BasicLayout.less';
 import { ClickParam } from 'antd/lib/menu';
@@ -15,6 +15,7 @@ import UIContext, { UIState, UIContextValue } from '../contexts/UIContext';
 import SessionContext, { SessionInfo, SessionContextValue } from '../contexts/SessionContext';
 import Error404 from '../pages/Errors/Error404';
 import ControlPanelBanner from '../components/ControlPanelBanner';
+import menu from '../common/menu';
 
 const { Content } = Layout;
 const { confirm } = Modal;
@@ -33,6 +34,14 @@ function getRoutes(routes: Object) {
     }
 
     return result;
+}
+
+function findMenuParentKey(key: string) {
+    const found = menu.filter(s => (s.items.filter(i => i.link == key).length > 0));
+    if (found.length == 0)
+        return null;
+
+    return found[0].key;
 }
 
 interface BasicLayoutProps extends BasePageProps {
@@ -59,6 +68,7 @@ export default class BasicLayout extends Component<BasicLayoutProps, BasicLayout
             uiState: {
                 state: {
                     isSideMenuFolded: false,
+                    sideMenuOpenKey: null,
                     currentMenuItem: '/'
                 },
                 setState: this.setUIContextState
@@ -75,9 +85,14 @@ export default class BasicLayout extends Component<BasicLayoutProps, BasicLayout
         const context: SessionContextValue = this.context;
         const { session, changeState } = context;
 
+        const key = location.pathname;
+        const openKey = findMenuParentKey(key);
+
         this.setUIContextState({
-            currentMenuItem: location.pathname
+            sideMenuOpenKey: [openKey],
+            currentMenuItem: key
         });
+
         history.listen(({pathname}) => {
             this.setUIContextState({
                 currentMenuItem: pathname
@@ -128,7 +143,7 @@ export default class BasicLayout extends Component<BasicLayoutProps, BasicLayout
     onUserMenuItemClick(e: ClickParam): void {
         const { history } = this.props;
         const context: SessionContextValue = this.context;
-        const { changeState } = context;
+        const { session, changeState } = context;
 
         const cmd = e.key;
 
@@ -141,6 +156,7 @@ export default class BasicLayout extends Component<BasicLayoutProps, BasicLayout
                     cancelText: '取消',
                     okText: '确定',
                     onOk() {
+                        userLogout(session.sessionId);
                         setSession(null);
                         changeState({ isLoggedIn: false });
                         history.push('/login');

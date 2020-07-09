@@ -17,8 +17,6 @@ export interface SideMenuProps {
 }
 
 export default class SideMenu extends Component<SideMenuProps> {
-    static contextType = UIContext;
-
     render() {
         const { onItemClick } = this.props;
         return (
@@ -27,7 +25,7 @@ export default class SideMenu extends Component<SideMenuProps> {
                     <Sider className={styles.sider} collapsed={state.isSideMenuFolded} width={256}>
                         <SessionContext.Consumer>
                             {({session}) => (
-                                <Menu selectable selectedKeys={[state.currentMenuItem]} onClick={e => { if (onItemClick) onItemClick(e); }} mode="inline" theme="dark">
+                                <Menu defaultOpenKeys={state.sideMenuOpenKey} onOpenChange={(e => setState({sideMenuOpenKey: e}))} selectable selectedKeys={[state.currentMenuItem]} onClick={e => { if (onItemClick) onItemClick(e); }} mode="inline" theme="dark">
                                     <MenuItem icon={<Icons.HomeOutlined />} key="/" title="首页">
                                         首页
                                     </MenuItem>
